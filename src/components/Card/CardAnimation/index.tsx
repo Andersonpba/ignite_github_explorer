@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useWindowDimensions, ViewProps } from 'react-native';
 import {
+  Extrapolate,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -23,14 +24,16 @@ export function CardAnimation({ children, ...rest }: CardAnimationProps) {
       opacity: interpolate(
         cardOpacity.value,
         [0, 50],
-        [0, 1]
+        [0, 1],
+        Extrapolate.CLAMP
       ),
       transform: [
         {
           translateX: interpolate(
             cardOpacity.value,
-            [0, 50],
-            [cardOffset.value, 0]
+            [0, 25, 50],
+            [cardOffset.value, cardOffset.value/2+0.00000000000001, 0],
+            Extrapolate.CLAMP
           ) 
         }
       ]
